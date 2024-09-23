@@ -36,16 +36,6 @@ const TotalSeasonViews = (props) => {
 
 // define variables
 const App = (props) => {
-  /* refactoring time! no need for these anymore!
-  const season = "Seinfeld Season 1";
-  const episode1 = "Good News, Bad News";
-  const viewsEp1 = 6905040;
-  const episode2 = "The Stakeout";
-  const viewsEp2 = 3905040;
-  const episode3 = "The Robbery";
-  const viewsEp3 = 4498237;
-  const totalViews = viewsEp1 + viewsEp2 + viewsEp3;
-  */
   const season = "Seinfeld Season 1";
   const episode1 = { name: "Good News, Bad News", views: 6905040 };
   const episode2 = { name: "The Stakeout", views: 3905040 };
@@ -54,14 +44,7 @@ const App = (props) => {
   return (
     <div>
       <ShowTitle season={season} />
-      {/* <Episodes
-        episode1={episode1.name}
-        episode2={episode2.name}
-        episode3={episode3.name}
-        viewsEp1={episode1.views}
-        viewsEp2={episode2.views}
-        viewsEp3={episode3.views}
-      /> */}
+
       <Episode
         nameEp1={episode1.name}
         viewsEp1={episode1.views}
@@ -71,14 +54,7 @@ const App = (props) => {
         viewsEp3={episode3.views}
       />
 
-      <TotalSeasonViews
-        /*
-        viewsEp1={viewsEp1}
-        viewsEp2={viewsEp2}
-        viewsEp3={viewsEp3}
-        */
-        totalViews={totalViews}
-      />
+      <TotalSeasonViews totalViews={totalViews} />
     </div>
   );
 };
