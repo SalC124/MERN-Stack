@@ -41,3 +41,7 @@ body {
   margin: 0 auto;
   max-width: 75%;
 }
+
+.error {
+  color: red;
+}
