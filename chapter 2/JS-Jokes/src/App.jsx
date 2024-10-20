@@ -3,21 +3,32 @@ import jokes from "./components/jokesList";
 
 const App = () => {
   const [jokeNum, setJokeNum] = useState(0);
-  const [jokeLikes, setJokeLikes] = useState(0);
+  // Use a map to store likes for each joke
+  const [jokeLikes, setJokeLikes] = useState(new Map());
+
+  // Get the number of likes for the current joke
+  // || 0 makes sure that if there is no value, it still shows 0
+  const currentLikes = jokeLikes.get(jokeNum) || 0;
+
+  const handleLikeClick = () => {
+    // Increment the like count for the current joke in the map
+    setJokeLikes(prevLikes => {
+      const newLikes = new Map(prevLikes);
+      newLikes.set(jokeNum, (newLikes.get(jokeNum) || 0) + 1);
+      return newLikes;
+    });
+  };
 
   return (
     <div className="main">
       <h1>JavaScript Jokes</h1>
-      {/* Display Joke */}
       <p>{jokes[jokeNum].joke}</p>
-      {/* Increase likes on that joke */}
-      <button onClick={() => setJokeLikes((jokeLikes) => jokeLikes + 1)}>
-        Likes: {jokes[jokeNum].likes}
+      <button onClick={handleLikeClick}>
+        Likes: {currentLikes} 
       </button>{" "}
-      {/* Choose a random joke */}
       <button
         onClick={() =>
-          setJokeNum((jokeNum) => Math.floor(Math.random() * jokes.length))
+          setJokeNum(() => Math.floor(Math.random() * jokes.length))
         }
       >
         Next Joke
