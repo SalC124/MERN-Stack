@@ -1,21 +1,20 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 // middleware for parsing body into js object
+app.use(cors());
 app.use(express.json());
-<<<<<<< HEAD
-=======
 
 const requestLogger = (req, res, next) => {
   console.log(`Request Method: ${req.method}`);
-  console.log(`Request Url: ${req.url}`);
-  console.log("Request Body: ", req.body);
+  console.log(`Request URL: ${req.url}`);
+  console.log("Request body:", req.body);
   console.log("------------");
   next();
-}
+};
 
 // utilize requestLogger middleware
 app.use(requestLogger);
->>>>>>> 5f1717f (bruh)
 
 const port = 3001;
 
@@ -40,17 +39,14 @@ app.post("/api/movies", (req, res) => {
   }
 });
 
-app.use(express.json());
-
 app.get("/api/movies", (req, res) => {
   res.json(movies);
 });
 
 app.get("/api/movies/:id", (req, res) => {
-  // must be == because === would check value and data type, and the two below are not the same data type
-  const movie = movies.find((m) => m.id == req.params.id);
+  const movie = movies.find((m) => m.id === Number(req.params.id));
   if (!movie) {
-    res.status(404).json({ error: "Movie not found (error code 404)" });
+    res.status(404).json({ error: "Movie not found" });
   } else {
     res.json(movie);
   }
@@ -59,15 +55,15 @@ app.get("/api/movies/:id", (req, res) => {
 app.delete("/api/movies/:id", (req, res) => {
   const movie = movies.find((m) => m.id === Number(req.params.id));
   if (!movie) {
-    res.status(404).json({ message: "Movie not found!" });
+    res.status(404).json({ error: "Movie not found!" });
   } else {
     movies = movies.filter((m) => m.id != req.params.id);
-    res.json(movies);
     res.json({ message: "Movie deleted successfully" });
   }
 });
+
 app.get("/", (req, res) => {
-  res.send("What's up");
+  res.send("Whats up");
 });
 
 app.listen(port, () => {

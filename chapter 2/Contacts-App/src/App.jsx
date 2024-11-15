@@ -27,7 +27,7 @@ const App = () => {
         </thead>
         <tbody>
           <tr className="green-row">
-            <td>Sample Name</td>
+            <td>{contacts[0]}</td>
           </tr>
           <tr className="green-row-dark">
             <td>Sample Name</td>
