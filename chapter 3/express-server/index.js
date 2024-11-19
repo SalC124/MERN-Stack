@@ -2,8 +2,6 @@ const express = require("express");
 const app = express();
 // middleware for parsing body into js object
 app.use(express.json());
-<<<<<<< HEAD
-=======
 
 const requestLogger = (req, res, next) => {
   console.log(`Request Method: ${req.method}`);
@@ -15,7 +13,6 @@ const requestLogger = (req, res, next) => {
 
 // utilize requestLogger middleware
 app.use(requestLogger);
->>>>>>> 5f1717f (bruh)
 
 const port = 3001;
 
