@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+// Movie model
+const Movie = require("./models/movie");
+
 // middleware for parsing body into js object
 app.use(cors());
 app.use(express.json());
@@ -19,33 +22,25 @@ app.use(requestLogger);
 
 const port = 3001;
 
-let movies = [
-  { id: 1, title: "Inception", watchlist: true },
-  { id: 2, title: "The Matrix", watchlist: false },
-  { id: 3, title: "Interstellar", watchlist: true },
-];
-
-app.post("/api/movies", (req, res) => {
+app.post("/api/movies", async (req, res) => {
   const { title, watchlist } = req.body;
   if (!title) {
     return res.status(400).json({ error: "Title is required" });
   } else {
-    const movie = {
-      id: `${Date.now()}${Math.floor(Math.random() * 10000)}`,
-      title,
-      watchlist: watchlist || false,
-    };
-    movies.push(movie);
-    return res.status(201).json(movie);
+    const movie = new Movie({title, watchlist : watchlist || false }) 
+    const savedMovie = await movie.save();
+    res.json(savedMovie);
   }
 });
 
-app.get("/api/movies", (req, res) => {
+app.get("/api/movies", async (req, res) => {
+  const movies = await Movie.find({});
+  console.log(movies);
   res.json(movies);
 });
 
-app.get("/api/movies/:id", (req, res) => {
-  const movie = movies.find((m) => m.id === Number(req.params.id));
+app.get("/api/movies/:id", async (req, res) => {
+  const movie = await Movie.findById(req.params.id);
   if (!movie) {
     res.status(404).json({ error: "Movie not found" });
   } else {
